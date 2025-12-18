@@ -1,15 +1,14 @@
 from fastapi import APIRouter
-from pydantic import BaseModel
 
 router = APIRouter()
 
-class UserCreate(BaseModel):
-    name: str
-    goal: str
+_fake_users = []
+
+@router.get("/")
+def list_users():
+    return _fake_users
 
 @router.post("/")
-def create_user(user: UserCreate):
-    return {
-        "message": "User created",
-        "user": user
-    }
+def create_user(user: dict):
+    _fake_users.append(user)
+    return user

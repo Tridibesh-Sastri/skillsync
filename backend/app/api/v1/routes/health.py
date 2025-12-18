@@ -1,11 +1,11 @@
-from app.core.schemas import APIResponse, Meta
+from fastapi import APIRouter
 
+router = APIRouter()
+
+@router.get("/")
 def health_check():
-    return APIResponse(
-        success=True,
-        data={
-            "status": "ok",
-            "service": "SkillSync API"
-        },
-        meta=Meta()
-    )
+    return {
+        "status": "ok",
+        "service": "SkillSync API",
+        "version": "v1"
+    }

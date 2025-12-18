@@ -1,28 +1,37 @@
 import { useEffect, useState } from "react";
 
+
+const API_BASE = "http://127.0.0.1:8000/api/v1";
+
+
 function App() {
-  const [data, setData] = useState(null);
+  const [message, setMessage] = useState("Loading from backend...");
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/message")
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch((err) => console.error(err));
+    fetch(`${API_BASE}/health/`)
+      .then(res => {
+        if (!res.ok) throw new Error("Backend error");
+        return res.json();
+      })
+      .then(data => {
+        setMessage(`✅ ${data.service} is running`);
+      })
+      .catch(err => {
+        setMessage("❌ Backend not reachable");
+        console.error(err);
+      });
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div style={{
+      background: "#111",
+      color: "#fff",
+      minHeight: "100vh",
+      padding: "40px",
+      fontFamily: "sans-serif"
+    }}>
       <h1>SkillSync</h1>
-
-      {data ? (
-        <>
-          <p><strong>Message:</strong> {data.message}</p>
-          <p><strong>Source:</strong> {data.source}</p>
-          <p><strong>Version:</strong> {data.version}</p>
-        </>
-      ) : (
-        <p>Loading from backend...</p>
-      )}
+      <p>{message}</p>
     </div>
   );
 }

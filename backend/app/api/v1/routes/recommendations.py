@@ -6,8 +6,8 @@ router = APIRouter()
 def get_recommendations():
     return {
         "recommendations": [
-            "Learn FastAPI fundamentals",
-            "Practice Docker multi-container setups"
-        ],
-        "source": "rule-based (AI-ready)"
+            "Learn FastAPI deeply",
+            "Build REST APIs",
+            "Practice Docker daily"
+        ]
     }
