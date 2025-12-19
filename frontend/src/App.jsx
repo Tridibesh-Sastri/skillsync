@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import SkillGraph from './components/SkillGraph';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/skills/graph" element={<SkillGraph />} />
           
           {/* Protected Routes */}
           <Route
