@@ -5,6 +5,7 @@ from app.api.auth import router as auth_router
 from app.api.skills import router as skills_router
 from app.core.neo4j_db import neo4j_conn
 from app.api.flashcards import router as flashcards_router
+from app.api.v1.routes import jobs
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -40,6 +41,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(skills_router)
 app.include_router(flashcards_router)
+app.include_router(jobs.router, prefix="/api/v1")
 
 @app.get("/health")
 def health():

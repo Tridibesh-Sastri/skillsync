@@ -18,3 +18,7 @@ neo4j==5.14.1
 
 chromadb>=0.4.15
 sentence-transformers>=2.2.2  # For generating embeddings locally
+
+spacy==3.7.0
+beautifulsoup4==4.12.0
+requests==2.31.0
