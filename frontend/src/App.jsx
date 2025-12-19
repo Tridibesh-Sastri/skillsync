@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import SkillGraph from './components/SkillGraph';
+import JobSkillMapper from './components/JobSkillMapper';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/skills/graph" element={<SkillGraph />} />
-          
+          <Route path="/jobs/skills" element={<JobSkillMapper />} />
+
           {/* Protected Routes */}
           <Route
             path="/dashboard"
