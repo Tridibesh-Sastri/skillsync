@@ -1,34 +1,24 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-# IMPORTANT: correct import based on your structure
-from app.api.v1.router import api_router
-
+from app.api.auth import router as auth_router
 
 app = FastAPI(
     title="SkillSync API",
-    version="1.0.0",
-    openapi_url="/openapi.json",
     docs_url="/docs",
+    redoc_url="/redoc"
 )
 
-# ✅ CORS (required for Vite frontend)
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # OK for dev, restrict in prod
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ✅ API router
-app.include_router(api_router, prefix="/api/v1")
+app.include_router(auth_router)
 
-
-# Optional root endpoint (nice to have)
-@app.get("/")
-def root():
-    return {
-        "message": "SkillSync backend running",
-        "docs": "/docs",
-    }
+@app.get("/health")
+def health():
+    return {"status": "ok"}
