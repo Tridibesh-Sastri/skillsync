@@ -1,38 +1,38 @@
-import { useEffect, useState } from "react";
-
-
-const API_BASE = "http://127.0.0.1:8000/api/v1";
-
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const [message, setMessage] = useState("Loading from backend...");
-
-  useEffect(() => {
-    fetch(`${API_BASE}/health/`)
-      .then(res => {
-        if (!res.ok) throw new Error("Backend error");
-        return res.json();
-      })
-      .then(data => {
-        setMessage(`✅ ${data.service} is running`);
-      })
-      .catch(err => {
-        setMessage("❌ Backend not reachable");
-        console.error(err);
-      });
-  }, []);
-
   return (
-    <div style={{
-      background: "#111",
-      color: "#fff",
-      minHeight: "100vh",
-      padding: "40px",
-      fontFamily: "sans-serif"
-    }}>
-      <h1>SkillSync</h1>
-      <p>{message}</p>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Default Route */}
+          <Route path="/" element={<Navigate to="/login" />} />
+          
+          {/* 404 Route */}
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
