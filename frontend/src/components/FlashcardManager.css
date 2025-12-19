@@ -1,0 +1,22 @@
+/* frontend/src/components/FlashcardManager.css */
+
+/* Container perspective */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Inner container that holds front and back */
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+/* Hides the back of the card when flipped */
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Safari support */
+}
+
+/* Rotate class for the flip effect */
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}

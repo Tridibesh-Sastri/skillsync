@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import SkillGraph from './components/SkillGraph';
 import JobSkillMapper from './components/JobSkillMapper';
+import FlashcardManager from './components/FlashcardManager';
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
                 <Dashboard />
               </ProtectedRoute>
             }
+          />
+          <Route 
+            path="/flashcards" 
+            element={
+              <ProtectedRoute>
+                <FlashcardManager />
+              </ProtectedRoute>
+            } 
           />
           
           {/* Default Route */}
