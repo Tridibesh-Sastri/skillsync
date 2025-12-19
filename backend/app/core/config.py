@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     NEO4J_USER: str = "neo4j"
     NEO4J_PASSWORD: str
     
+    # ChromaDB Configuration (NEW)
+    CHROMA_HOST: str = "chromadb"
+    CHROMA_PORT: str = "8000"
     class Config:
         env_file = ".env"
 

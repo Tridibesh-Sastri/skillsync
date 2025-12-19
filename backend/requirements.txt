@@ -9,8 +9,12 @@ pydantic[email]
 pydantic-settings
 python-dotenv
 
-bcrypt==3.2.2
+# bcrypt==3.2.2
+passlib[bcrypt]
 passlib[bcrypt]==1.7.4
 python-jose[cryptography]
 
 neo4j==5.14.1
+
+chromadb>=0.4.15
+sentence-transformers>=2.2.2  # For generating embeddings locally
