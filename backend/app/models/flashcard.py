@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean, Float
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.core.database import Base
@@ -12,6 +12,13 @@ class Flashcard(Base):
     answer = Column(Text, nullable=False)
     category = Column(String(100), nullable=True)
     difficulty = Column(String(20), default="Medium")  # Easy, Medium, Hard
+    
+    # SM-2 Algorithm fields
+    repetitions = Column(Integer, default=0)
+    easiness_factor = Column(Float, default=2.5)
+    interval = Column(Integer, default=0)
+    next_review = Column(DateTime, nullable=True)
+    last_reviewed = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

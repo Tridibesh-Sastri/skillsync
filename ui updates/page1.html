@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SkillSync Command Center</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2e0bda",
+                        "accent-neon": "#00f3ff", // Cyan for neon pops
+                        "accent-pink": "#ff00ff", // Pink for synthwave vibes
+                        "background-light": "#f6f5f8",
+                        "background-dark": "#131022",
+                        "surface-dark": "#1d1b2e", // Slightly lighter than bg-dark for cards
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    boxShadow: {
+                        'neon': '0 0 10px rgba(46, 11, 218, 0.5), 0 0 20px rgba(46, 11, 218, 0.3)',
+                        'neon-cyan': '0 0 5px rgba(0, 243, 255, 0.5), 0 0 10px rgba(0, 243, 255, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #131022;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2e0bda;
+            border-radius: 4px;
+        }
+
+        /* Holographic grid background effect */
+        .holo-grid {
+            background-image: linear-gradient(rgba(46, 11, 218, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46, 11, 218, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center top;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-accent-neon selection:text-black">
+    <div
+        class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto overflow-hidden shadow-2xl border-x border-primary/20 bg-background-dark">
+        <!-- Background Grid Effect -->
+        <div class="absolute inset-0 pointer-events-none holo-grid z-0"></div>
+        <!-- Top App Bar -->
+        <header
+            class="relative z-10 flex items-center p-4 pt-6 justify-between bg-gradient-to-b from-background-dark/90 to-transparent backdrop-blur-sm sticky top-0">
+            <div class="flex items-center gap-3">
+                <div class="relative group cursor-pointer">
+                    <div
+                        class="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent-neon rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200">
+                    </div>
+                    <div class="relative bg-center bg-no-repeat bg-cover rounded-full size-10 border border-white/10"
+                        data-alt="Futuristic pilot avatar portrait"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtfaPW0ypXmHWr8Z2aSfMkoMfF8k9LY8rW30Ob1eLFrEqd5zqdJtqglIVsxDekCBvt0vNFPAG-pvrEb42NCB5vypEQxkoNPY4cRmubY_btIxV_6qjZ8cd3b07Bi0FpV_LSyqHj8xcBVtNwPw2QBc3MIJRxW5dLamt_ZC1UDMUQvaoKlS569xi6pZAh0NSaW4HtKUoVuBFu9wHzsWK5vkwEydpFIZx1Jx2RK3-qT7NGgHHK0aQ8iSBCxBxzZa3jejZDCkgLdMz5WOFV");'>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xs text-accent-neon uppercase tracking-widest font-bold">Online</span>
+                    <h2 class="text-white text-lg font-bold leading-tight tracking-tight">Pilot Zero</h2>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button
+                    class="flex items-center justify-center rounded-full size-10 text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button
+                    class="flex items-center justify-center rounded-full size-10 text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined">settings</span>
+                </button>
+            </div>
+        </header>
+        <!-- Main Content Scroll Area -->
+        <main class="relative z-10 flex-1 flex flex-col gap-6 px-4 pb-28 overflow-y-auto">
+            <!-- Level Progress Section -->
+            <section class="flex flex-col gap-2 pt-2">
+                <div class="flex justify-between items-end px-1">
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-3xl font-bold text-white tracking-tighter">LVL 42</span>
+                        <span class="text-sm text-primary font-medium tracking-widest uppercase">Elite</span>
+                    </div>
+                    <span class="text-white/60 text-xs font-mono">1200 / 1500 XP</span>
+                </div>
+                <div
+                    class="relative h-3 w-full bg-surface-dark rounded-full overflow-hidden border border-white/5 shadow-inner">
+                    <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-accent-neon shadow-[0_0_10px_rgba(46,11,218,0.6)] transition-all duration-1000 ease-out"
+                        style="width: 80%;"></div>
+                </div>
+            </section>
+            <!-- Streak Card -->
+            <section>
+                <div
+                    class="relative overflow-hidden rounded-xl bg-surface-dark border border-primary/30 p-4 shadow-lg group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-[50px] -mr-10 -mt-10 rounded-full">
+                    </div>
+                    <div class="relative z-10 flex items-center justify-between gap-4">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-accent-neon text-xs font-bold uppercase tracking-wider">Streak Status</p>
+                            <p class="text-white text-2xl font-bold leading-tight">12 Day Streak</p>
+                            <div
+                                class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded bg-orange-500/10 border border-orange-500/30 w-fit">
+                                <span
+                                    class="material-symbols-outlined text-orange-500 text-[16px]">local_fire_department</span>
+                                <span class="text-orange-400 text-xs font-bold uppercase">Ignited</span>
+                            </div>
+                        </div>
+                        <!-- Abstract Fire Visual -->
+                        <div class="relative flex items-center justify-center size-16 shrink-0">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-tr from-orange-600 to-yellow-400 rounded-full blur opacity-20 animate-pulse">
+                            </div>
+                            <span
+                                class="material-symbols-outlined text-orange-500 text-5xl drop-shadow-[0_0_8px_rgba(255,165,0,0.8)]">local_fire_department</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Skill Matrix Graph -->
+            <section class="flex flex-col gap-3">
+                <div class="flex justify-between items-center px-1">
+                    <h3
+                        class="text-white text-base font-bold uppercase tracking-widest border-l-2 border-accent-neon pl-2">
+                        Skill Frequency</h3>
+                    <button class="text-xs text-primary hover:text-accent-neon transition-colors font-medium">View Full
+                        Report</button>
+                </div>
+                <div
+                    class="relative rounded-xl border border-white/10 bg-surface-dark/80 backdrop-blur-md p-5 shadow-neon overflow-hidden">
+                    <!-- Graph Background Grid lines -->
+                    <div class="absolute inset-0 z-0 opacity-10"
+                        style="background-image: linear-gradient(transparent 95%, #2e0bda 95%); background-size: 100% 20%;">
+                    </div>
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-white/50 text-xs font-mono mb-1">CURRENT SYNC</p>
+                                <p class="text-white text-2xl font-bold truncate">Active</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-white/50 text-xs font-mono mb-1">GROWTH</p>
+                                <p class="text-accent-neon text-lg font-bold font-mono">+12%</p>
+                            </div>
+                        </div>
+                        <!-- Chart SVG -->
+                        <div class="w-full h-32 mt-2">
+                            <svg class="w-full h-full overflow-visible" fill="none" preserveaspectratio="none"
+                                viewbox="0 0 478 150" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <lineargradient gradientunits="userSpaceOnUse" id="chartGradient" x1="239" x2="239"
+                                        y1="0" y2="150">
+                                        <stop stop-color="#2e0bda" stop-opacity="0.6"></stop>
+                                        <stop offset="1" stop-color="#2e0bda" stop-opacity="0"></stop>
+                                    </lineargradient>
+                                    <filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+                                        <fegaussianblur result="coloredBlur" stddeviation="4"></fegaussianblur>
+                                        <femerge>
+                                            <femergenode in="coloredBlur"></femergenode>
+                                            <femergenode in="SourceGraphic"></femergenode>
+                                        </femerge>
+                                    </filter>
+                                </defs>
+                                <path
+                                    d="M0 109C18.15 109 18.15 21 36.3 21C54.46 21 54.46 41 72.61 41C90.76 41 90.76 93 108.92 93C127.07 93 127.07 33 145.23 33C163.38 33 163.38 101 181.53 101C199.69 101 199.69 61 217.84 61C236 61 236 45 254.15 45C272.3 45 272.3 121 290.46 121C308.61 121 308.61 149 326.76 149C344.92 149 344.92 1 363.07 1C381.23 1 381.23 81 399.38 81C417.53 81 417.53 129 435.69 129C453.84 129 453.84 25 472 25V150H0V109Z"
+                                    fill="url(#chartGradient)"></path>
+                                <path
+                                    d="M0 109C18.15 109 18.15 21 36.3 21C54.46 21 54.46 41 72.61 41C90.76 41 90.76 93 108.92 93C127.07 93 127.07 33 145.23 33C163.38 33 163.38 101 181.53 101C199.69 101 199.69 61 217.84 61C236 61 236 45 254.15 45C272.3 45 272.3 121 290.46 121C308.61 121 308.61 149 326.76 149C344.92 149 344.92 1 363.07 1C381.23 1 381.23 81 399.38 81C417.53 81 417.53 129 435.69 129C453.84 129 453.84 25 472 25"
+                                    filter="url(#glow)" stroke="#00f3ff" stroke-linecap="round" stroke-width="3"></path>
+                            </svg>
+                        </div>
+                        <div class="flex justify-between pt-2 border-t border-white/10">
+                            <div class="text-center">
+                                <span
+                                    class="block size-2 rounded-full bg-accent-neon mx-auto mb-1 shadow-[0_0_5px_#00f3ff]"></span>
+                                <p class="text-white/60 text-[10px] uppercase font-bold tracking-wider">React</p>
+                            </div>
+                            <div class="text-center">
+                                <span class="block size-2 rounded-full bg-primary mx-auto mb-1"></span>
+                                <p class="text-white/60 text-[10px] uppercase font-bold tracking-wider">Design</p>
+                            </div>
+                            <div class="text-center">
+                                <span class="block size-2 rounded-full bg-primary mx-auto mb-1"></span>
+                                <p class="text-white/60 text-[10px] uppercase font-bold tracking-wider">Python</p>
+                            </div>
+                            <div class="text-center">
+                                <span class="block size-2 rounded-full bg-primary mx-auto mb-1"></span>
+                                <p class="text-white/60 text-[10px] uppercase font-bold tracking-wider">Mgmt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Daily Operations (Quests) -->
+            <section class="flex flex-col gap-3">
+                <h3 class="text-white text-base font-bold uppercase tracking-widest border-l-2 border-accent-pink pl-2">
+                    Daily Operations</h3>
+                <!-- Quest 1 -->
+                <div
+                    class="group relative flex items-center gap-4 rounded-xl bg-surface-dark border border-white/5 p-4 active:scale-[0.98] transition-all duration-200">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-accent-neon rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div
+                        class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-background-dark border border-white/10 text-accent-neon shadow-[0_0_10px_rgba(0,243,255,0.1)]">
+                        <span class="material-symbols-outlined">school</span>
+                    </div>
+                    <div class="flex flex-col flex-1 gap-1">
+                        <h4 class="text-white text-sm font-bold">Complete 1 Lesson</h4>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-white/50 bg-white/5 px-1.5 py-0.5 rounded">Core Skills</span>
+                            <span class="text-xs text-accent-neon font-medium">+50 XP</span>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center justify-center size-8 rounded-full border-2 border-dashed border-white/20">
+                        <span class="block size-2 rounded-full bg-white/20"></span>
+                    </div>
+                </div>
+                <!-- Quest 2 -->
+                <div
+                    class="group relative flex items-center gap-4 rounded-xl bg-surface-dark border border-white/5 p-4 active:scale-[0.98] transition-all duration-200">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-accent-pink rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div
+                        class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-background-dark border border-white/10 text-accent-pink shadow-[0_0_10px_rgba(255,0,255,0.1)]">
+                        <span class="material-symbols-outlined">stadia_controller</span>
+                    </div>
+                    <div class="flex flex-col flex-1 gap-1">
+                        <h4 class="text-white text-sm font-bold">Practice Mode: 15min</h4>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-white/50 bg-white/5 px-1.5 py-0.5 rounded">Training</span>
+                            <span class="text-xs text-accent-pink font-medium">+20 XP</span>
+                        </div>
+                    </div>
+                    <button
+                        class="flex items-center justify-center h-8 px-3 rounded bg-primary/20 hover:bg-primary/40 text-primary hover:text-white border border-primary/30 text-xs font-bold uppercase transition-colors">
+                        Start
+                    </button>
+                </div>
+                <!-- Quest 3 -->
+                <div
+                    class="group relative flex items-center gap-4 rounded-xl bg-surface-dark border border-white/5 p-4 opacity-75">
+                    <div
+                        class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-background-dark border border-white/10 text-white/40">
+                        <span class="material-symbols-outlined">inventory_2</span>
+                    </div>
+                    <div class="flex flex-col flex-1 gap-1">
+                        <h4 class="text-white/70 text-sm font-bold">Organize Inventory</h4>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-white/30 bg-white/5 px-1.5 py-0.5 rounded">Maintenance</span>
+                            <span class="text-xs text-white/40 font-medium">+10 XP</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center size-8">
+                        <span class="material-symbols-outlined text-green-500">check_circle</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- Floating Bottom Dock -->
+        <nav
+            class="absolute bottom-6 left-4 right-4 h-16 rounded-2xl bg-[#1d1b2e]/90 backdrop-blur-xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-50 flex items-center justify-between px-2">
+            <a class="flex-1 flex flex-col items-center justify-center gap-1 group" href="#">
+                <span
+                    class="material-symbols-outlined text-accent-neon group-hover:drop-shadow-[0_0_8px_#00f3ff] transition-all">home</span>
+                <span class="text-[10px] font-bold text-white/90 group-hover:text-white">Base</span>
+            </a>
+            <a class="flex-1 flex flex-col items-center justify-center gap-1 group text-white/50 hover:text-white transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">bar_chart</span>
+                <span class="text-[10px] font-bold">Skills</span>
+            </a>
+            <!-- Center FAB - Sync -->
+            <div class="relative -top-6">
+                <button
+                    class="flex items-center justify-center size-14 rounded-full bg-primary text-white shadow-[0_0_20px_rgba(46,11,218,0.6)] border-4 border-background-dark hover:scale-105 active:scale-95 transition-transform">
+                    <span class="material-symbols-outlined text-2xl animate-pulse">sync</span>
+                </button>
+            </div>
+            <a class="flex-1 flex flex-col items-center justify-center gap-1 group text-white/50 hover:text-white transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">backpack</span>
+                <span class="text-[10px] font-bold">Items</span>
+            </a>
+            <a class="flex-1 flex flex-col items-center justify-center gap-1 group text-white/50 hover:text-white transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[10px] font-bold">Profile</span>
+            </a>
+        </nav>
+        <!-- Bottom safe area spacer -->
+        <div class="h-4 w-full bg-transparent"></div>
+    </div>
+</body>
+
+</html>

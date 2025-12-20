@@ -1,41 +1,26 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
-// Create axios instance with default config
-const api = axios.create({
-  baseURL: API_URL,
+const apiClient = axios.create({
+  baseURL: 'http://localhost:8000', // Your FastAPI backend URL
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Request interceptor to add token to requests
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
+export default {
+  // --- Job & Skill Endpoints ---
+  scrapeAndAnalyzeJob: (jobTitle) => {
+    return apiClient.post(`/api/jobs/scrape-and-analyze?job_title=${jobTitle}`);
   },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  getSkillGraph: () => {
+    return apiClient.get('/api/skills/graph');
+  },
 
-// Response interceptor to handle errors
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Token expired or invalid
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
-);
-
-export default api;
+  // --- Flashcard Endpoints ---
+  getDueFlashcards: (userId) => {
+    return apiClient.get(`/api/flashcards/due/${userId}`);
+  },
+  reviewFlashcard: (cardId, quality) => {
+    return apiClient.post(`/api/flashcards/${cardId}/review?quality=${quality}`);
+  },
+};
