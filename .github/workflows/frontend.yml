@@ -4,14 +4,14 @@ on:
   push:
     branches: [ "dev", "main" ]
     paths:
-      - 'frontend/**'  # Only trigger when frontend files change
+      - 'frontend/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./frontend  # Important: commands run inside 'frontend' folder
+        working-directory: ./frontend
 
     steps:
     - name: Check out code
@@ -29,4 +29,3 @@ jobs:
 
     - name: Build Project
       run: npm run build
-      # If this step fails, the pipeline fails.
